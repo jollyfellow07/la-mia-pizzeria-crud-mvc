@@ -1,0 +1,42 @@
+﻿
+@model Pizza
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+           <div class="d-flex align-items-center ">
+               <h1>Nuova Pizza</h1>
+           </div>
+            <form action=@Url.Action("Create", "Pizza") method="post" class="row g-3">
+                @Html.AntiForgeryToken()
+              <div class="col-md-6">
+                <strong>Titolo:</strong>
+                <input asp-for="Title" type="text" class="d-block w-100">
+                <span asp-validation-for="Title" class="text-danger"></span>
+              </div>
+              <div class="col-md-6">
+                <strong>inserisci il nome del file jpg (non path):</strong>
+                <input asp-for="Image" type="text" class="d-block w-100">
+                <span asp-validation-for="Image" class="text-danger"></span>
+              </div>
+              <div class="col-md-6">
+                <strong>inserisci il nome del file jpg (non path):</strong>
+                <input asp-for="Image2" type="text" class="d-block w-100">
+                <span asp-validation-for="Image2" class="text-danger"></span>
+              </div>
+               <div class="col-md-6">
+                <strong>Prezzo:</strong>
+                <input asp-for="Prezzo" type="number" class="d-block w-100">
+                <span asp-validation-for="Prezzo" class="text-danger"></span>
+              </div>
+              <div class="col-md-6">
+                <strong>Ingredienti della pizza:</strong>
+                <textarea asp-for="Ingredienti" rows="10" class="d-block w-100"></textarea>
+                <span asp-validation-for="Ingredienti" class="text-danger"></span>
+              </div>
+              <div class="col-12 justify-content-center text-center">
+                <button type="submit" class="btn btn-warning">Salva</button>
+              </div>
+            </form>
+        </div>
+   </div>
+</div>

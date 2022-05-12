@@ -1,0 +1,6 @@
+﻿
+#sfondo {
+    background-image: url("~/img/patatesalsiccia.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

@@ -1,0 +1,103 @@
+﻿
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!--esercizio 1 -->
+    <div>
+        <p><strong> 1. Dichiarare una variabile valorizzandola con il nostro nome.
+        Dichiarare un'altra variabile valorizzandola con il nostro cognome.
+        Stampare il nostro nome e cognome all'interno di un tag h2. </strong></p>
+        @{
+            string nome = "Simone";
+            string cognome = "Compagnone";
+
+        }
+        <h2>@nome @cognome</h2>
+    </div>
+        <!--esercizio 2 -->
+    <div>
+        <p><strong> 2. Creare una funzione che stampa la somma dei numeri che vanno da 1 a n (con n passato come parametro - n incluso)
+                    Stampare dentro uno span il risultato. </strong></p>
+            @{
+
+                int n = 5;
+                for(int i = 0; i<=n; i++)
+                {
+                    <span>@i</span>
+                }
+
+             }
+    </div>
+    <!--esercizio 3 -->
+    <div>
+        <p><strong> 3. Contare quante volte la lettera a è presente nalla frase 
+                "nel mezzo del cammin di nostra vita" e stampare questo valore in pagina </strong></p>
+        @{ 
+            string poesia = "nel mezzo del cammin di nostra vita";
+            int count = poesia.Split('a').Length - 1; 
+            <span>questo perzzo di poesia contiene @count caratteri a</span>
+         }
+    </div>
+    <!--esercizio 4 -->
+     <div>
+        <p><strong> 4. Creare una List di 20 numeri interi (generati random da 1 a 90, 
+                1 e 90 inclusi) e mostrare in pagina solo i numeri compresi tra 20 e 70 </strong></p>
+        @{
+            Random numeroCasuale = new Random();
+            List<int> listaNumeri = new List<int>();
+            for (int i=0; i < 20; i++)
+            {
+                int numeroNuovo =  numeroCasuale.Next(1, 91);
+                if ((numeroNuovo >= 20) && (numeroNuovo <= 70))
+                {
+            <span>@numeroNuovo</span>
+                }
+            } 
+            }
+      </div>  
+      <!--esercizio 5 -->
+      <div>
+            <p><strong>5. Stampare in pagina la data e l'ora attuale (usando la classe DateTime) 
+            con il formato anno-mese-giorno ore:minuti:secondi </strong></p>
+            @{ 
+              var dataEOraAttuale = DateTime.Now.ToString();
+              <span>Questa è la data e ora attuale @dataEOraAttuale</span>
+        }
+    </div>
+    <!--esercizio 6 -->
+    <div>
+        <p><strong>6. Partendo dalla data di oggi (usando la classe DateTime) stampare in pagina
+                <br> a. la data di 7 giorni fa
+                <br> b. che giorno della settimana è oggi (il risultato dovrà essere il nome del giorno (Lunedì, Martedì, ...)
+                <br> c. che giorno della settimana sarà nello stesso giorno e mese di oggi ma tra un anno (il risultato dovrà essere il nome del giorno (Lunedì, Martedì, ...) </strong></p>
+
+        @{
+            DateTime dataAttuale = DateTime.Now;
+            <p>7 giorni fa alla data di oggi era il: @dataAttuale.AddDays(-7)</p>
+            <p>La data di 7 giorni fa è : @dataAttuale.ToString("ddd") </p>
+            DateTime dataTraUnAnno = dataAttuale.AddYears(1);
+            <p>Il giorno della settimana tra un anno è: @dataTraUnAnno.ToString("ddd") </p>
+          }
+      </div>
+                
+
+            
+</body>
+</html>

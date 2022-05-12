@@ -1,0 +1,27 @@
+﻿@model Pizza
+
+<div class="container">
+    <div class="text-center row justify-content-center m-5">
+            <div class="card shadow mb-5 bg-body rounded justify-content-center" style="width: 24rem;">
+            <!-- SLIDE -->
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src=~/img/@Model.Image  height="350" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src=~/img/@Model.Image2 height="350"  class="d-block w-100" alt="...">
+                </div>
+                </div>
+            </div>
+            <!--FINE SLIDE -->
+                <div class="card-body p-0 bg-opacity-50">
+                    <h5 class="card-title bg-warning text-white p-2">@Model.Title</h5>
+                    <p class="card-text text-center p-3">@Model.Ingredienti</p>
+                    <hr class="m-0" >
+                    <p class="text-warning p-0 m-0 fs-6" >ATTENZIONE: PIZZA CON GLUTINE </p>
+                    <p class="p-4"> <b>@Model.Prezzo €</b></p>
+                </div>
+            </div>
+    </div>
+</div>
