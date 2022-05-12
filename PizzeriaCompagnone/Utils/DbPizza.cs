@@ -14,7 +14,7 @@ namespace PizzeriaCompagnone.Utils
             }
             List<Pizza> NuovaListaPizze = new List<Pizza>();
 
-            Pizza pizza1 = new Pizza(0, "Mortadella Bologna IGP “La Santo”", "Mortadella Bologna IGP “La Santo” Villani, Pesto di Pistacchio, Fiordilatte “Latteria Sorrentina”, Olio EVO Italiano e Basilico.", "mortadella3.jpg", "mortadella2.jpg",8.00) ;
+            Pizza pizza1 = new Pizza(0, "Mortadella Bologna IGP “La Santo”", "Mortadella Bologna IGP “La Santo” Villani, Pesto di Pistacchio, Fiordilatte “Latteria Sorrentina”, Olio EVO Italiano e Basilico.", "mortadella3.jpg", "mortadella2.jpg", 8.00) ;
             NuovaListaPizze.Add(pizza1);
             Pizza pizza2 = new Pizza(1, "Salsiccia e Friarielli", "Salsiccia Fresca di Maiale, Friarielli Saltati in Padella con Peperoncino, Provola Affumicata, Basilico Fresco.", "fiarielli.jpg", "fiarielli3.jpg", 8.00);
             NuovaListaPizze.Add(pizza2);
