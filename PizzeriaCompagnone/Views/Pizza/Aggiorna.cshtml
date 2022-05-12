@@ -1,12 +1,11 @@
-﻿
-@model Pizza
+﻿@model Pizza
 <div class="container">
     <div class="row">
         <div class="col-12">
            <div class="d-flex align-items-center ">
-               <h1>Nuova Pizza</h1>
+               <h1>Modifica Pizza</h1>
            </div>
-            <form action=@Url.Action("Create", "Pizza") method="post" class="row g-3">
+            <form action=@Url.Action("Aggiorna", "Pizza") method="post" class="row g-3">
                 @Html.AntiForgeryToken()
               <div class="col-md-6">
                 <strong>Titolo:</strong>

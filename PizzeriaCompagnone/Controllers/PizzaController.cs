@@ -16,14 +16,9 @@ namespace PizzeriaCompagnone.Controllers
         public IActionResult Dettagli(int id)
         {
             Pizza pizzaTrovata = null;
-            foreach (Pizza pizza in DbPizza.GetPizzas())
-            {
-                if (pizza.id == id)
-                {
-                    pizzaTrovata = pizza;
-                    break;
-                }
-            }
+            
+            pizzaTrovata = TrovaId(id);
+
             if (pizzaTrovata != null)
             {
                 return View("Dettagli", pizzaTrovata);
@@ -55,6 +50,77 @@ namespace PizzeriaCompagnone.Controllers
             DbPizza.GetPizzas().Add(nuovaPizzaConId);
             return RedirectToAction("Index");
 
+        }
+
+        [HttpGet]
+        public IActionResult Aggiorna()
+        {
+            return View("Aggiorna");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Aggiorna(int id, Pizza model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Aggiorna", model);
+            }
+            Pizza pizzaOriginale = TrovaId(id);
+            if(pizzaOriginale != null)
+            {
+                pizzaOriginale.id = model.id;
+                pizzaOriginale.Title = model.Title;
+                pizzaOriginale.Ingredienti = model.Ingredienti;
+                pizzaOriginale.Image = model.Image;
+                pizzaOriginale.Image2 = model.Image2;
+                pizzaOriginale.Prezzo = model.Prezzo;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return NotFound(); 
+            }
+        }
+        //Metodo per eliminare la nostra pizza
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Elimina(int id)
+        {
+            int indicePizzaDaRimuovere = -1;
+            List<Pizza> listaPizza = DbPizza.GetPizzas();
+            for(int i = 0; i < listaPizza.Count; i++)
+            {
+                if(listaPizza[i].id == id)
+                {
+                indicePizzaDaRimuovere = i;
+                }
+            }
+
+            if(indicePizzaDaRimuovere != -1)
+            {
+                DbPizza.GetPizzas().RemoveAt(indicePizzaDaRimuovere);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        //Metodo per la ricerca dell´ íd
+        private Pizza TrovaId(int id)
+        {
+            Pizza pizzaNuova = null;
+
+            foreach (Pizza pizza in DbPizza.GetPizzas())
+            {
+                if (pizza.id == id)
+                {
+                    pizzaNuova = pizza;
+                    break;
+                }
+            }
+            return pizzaNuova;
         }
     }
 }
