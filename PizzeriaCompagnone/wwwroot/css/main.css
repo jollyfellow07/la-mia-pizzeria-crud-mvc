@@ -90,7 +90,8 @@
 /*---------------*/
 
 figure.effect-layla {
-    background: #18a367;
+    background: #000000;
+    border: 6px solid white
 }
 
     figure.effect-layla img {
@@ -190,7 +191,5 @@ figure.effect-layla {
         transition-delay: 0.15s;
     }
 .titolo {
-    font-family: Georgia, serif;
-    font-size: 60px;
-    color: white;
+    font: small-caps bold 70px/1 sans-serif;
 }
