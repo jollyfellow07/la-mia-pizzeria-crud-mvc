@@ -2,41 +2,55 @@
 using PizzeriaCompagnone.Data;
 using PizzeriaCompagnone.Models;
 using PizzeriaCompagnone.Utils;
+using System.Linq;
 
 namespace PizzeriaCompagnone.Controllers
-    
+
 {
     public class PizzaController : Controller
     {
         [HttpGet]
         public IActionResult Index()
         {
-            List<Pizza> pizzas = DbPizza.GetPizzas();
-            return View("HomePage", pizzas);
+            List<Pizza> pizzaList = new List<Pizza>();
+            using (PizzaContext db = new PizzaContext())
+            {
+                pizzaList = db.Pizze.ToList<Pizza>();
+
+            }
+            return View("HomePage", pizzaList);
         }
         [HttpGet]
         public IActionResult Dettagli(int id)
         {
-            Pizza pizzaTrovata = null;
-            
-            pizzaTrovata = TrovaId(id);
-
-            if (pizzaTrovata != null)
+            using (PizzaContext db = new PizzaContext())
             {
-                return View("Dettagli", pizzaTrovata);
-            }
-            else
-            {
-                return NotFound("il post con id " + id + " non è stato trovato!");
-            }
+                try
+                {
+                    Pizza pizzaTrovata = db.Pizze
+                         .Where(pizza => pizza.id == id)
+                         .First();
+
+                    return View("Dettagli", pizzaTrovata);
+
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return NotFound("La pizza con id " + id + " non è stata trovata");
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest();
+                }
 
 
+            }
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View("NuovoPost") ;
+            return View("NuovoPost");
         }
 
 
@@ -61,10 +75,25 @@ namespace PizzeriaCompagnone.Controllers
         }
 
         [HttpGet]
-        public IActionResult Aggiorna()
+        public IActionResult Aggiorna(int id)
         {
-            return View("Aggiorna");
+            Pizza? pizzaDaModificare = null;
+            using (PizzaContext db = new PizzaContext())
+            {
+                      pizzaDaModificare = db.Pizze
+                     .Where(pizza => pizza.id == id)
+                     .FirstOrDefault();
+            }
+            if (pizzaDaModificare == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View("Aggiorna", pizzaDaModificare);
+            }
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Aggiorna(int id, Pizza model)
@@ -73,20 +102,30 @@ namespace PizzeriaCompagnone.Controllers
             {
                 return View("Aggiorna", model);
             }
-            Pizza pizzaOriginale = TrovaId(id);
-            if(pizzaOriginale != null)
+
+            Pizza? pizzaOriginale = null;
+
+            using (PizzaContext db = new PizzaContext())
             {
-                pizzaOriginale.id = model.id;
-                pizzaOriginale.Title = model.Title;
-                pizzaOriginale.Ingredienti = model.Ingredienti;
-                pizzaOriginale.Image = model.Image;
-                pizzaOriginale.Image2 = model.Image2;
-                pizzaOriginale.Prezzo = model.Prezzo;
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return NotFound(); 
+                    pizzaOriginale = db.Pizze
+                     .Where(pizza => pizza.id == id)
+                     .FirstOrDefault();
+                if (pizzaOriginale != null)
+                {
+                    pizzaOriginale.Title = model.Title;
+                    pizzaOriginale.Ingredienti = model.Ingredienti;
+                    pizzaOriginale.Image = model.Image;
+                    pizzaOriginale.Image2 = model.Image2;
+                    pizzaOriginale.Prezzo = model.Prezzo;
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
         }
         //Metodo per eliminare la nostra pizza
@@ -95,43 +134,29 @@ namespace PizzeriaCompagnone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Elimina(int id)
         {
-            int indicePizzaDaRimuovere = -1;
-            List<Pizza> listaPizza = DbPizza.GetPizzas();
-            for(int i = 0; i < listaPizza.Count; i++)
+
+            using (PizzaContext db = new PizzaContext())
             {
-                if(listaPizza[i].id == id)
+                Pizza? pizzaDaCancellare = db.Pizze
+                     .Where(pizza => pizza.id == id)
+                     .FirstOrDefault();
+
+                if (pizzaDaCancellare != null)
                 {
-                indicePizzaDaRimuovere = i;
+                    db.Pizze.Remove(pizzaDaCancellare);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return NotFound();
                 }
             }
 
-            if(indicePizzaDaRimuovere != -1)
-            {
-                DbPizza.GetPizzas().RemoveAt(indicePizzaDaRimuovere);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
 
-        //Metodo per la ricerca dell´ íd
-        private Pizza TrovaId(int id)
-        {
-            Pizza pizzaNuova = null;
 
-            foreach (Pizza pizza in DbPizza.GetPizzas())
-            {
-                if (pizza.id == id)
-                {
-                    pizzaNuova = pizza;
-                    break;
-                }
-            }
-            return pizzaNuova;
         }
-       
     }
 }
 
