@@ -34,7 +34,9 @@
                                   <h5 class="card-title bg-warning text-white p-2">@menu.Title</h5>
                                   
                                   <p class="text-warning p-0 m-0 fs-6" >ATTENZIONE: PIZZA CON GLUTINE </p>
-                                  <p class="p-4"> <b>@menu.Prezzo €</b></p>
+                                      <p class="p-4"> 
+                                          <b>@menu.Prezzo €</b>
+                                      </p>
                                   <p>
                                    <form action="@Url.Action("Elimina", "Pizza", new {id= menu.id})" method="post">
                                       <a type="button" href=@Url.Action("Aggiorna", "Pizza", new { id = menu.id })  class="btn btn-warning">Modifica</a>
@@ -45,7 +47,6 @@
                                         </button>
                                         <span>     </span>
                                       <a type="button" href=@Url.Action("Dettagli", "Pizza", new { id = menu.id })  class="btn btn-warning">Dettagli</a>
-
                                     </form>
                                   </p>
                                 </div>

@@ -5,6 +5,7 @@ namespace PizzeriaCompagnone.Models
 {
     public class Pizza
     {
+        [Key]
         public int id { get; set; }
 
         [Required(ErrorMessage = "Il campo titolo è obbligatorio")]
@@ -28,9 +29,9 @@ namespace PizzeriaCompagnone.Models
         {
 
         }
-        public Pizza(int id, string title, string ingredienti, string image, string image2, double prezzo)
+        public Pizza(string title, string ingredienti, string image, string image2, double prezzo)
         {
-            this.id = id;
+            
             this.Title = title;
             this.Ingredienti = ingredienti;
             this.Image = image;

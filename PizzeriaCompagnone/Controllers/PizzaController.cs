@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PizzeriaCompagnone.Data;
 using PizzeriaCompagnone.Models;
 using PizzeriaCompagnone.Utils;
 
 namespace PizzeriaCompagnone.Controllers
+    
 {
     public class PizzaController : Controller
     {
@@ -37,6 +39,8 @@ namespace PizzeriaCompagnone.Controllers
             return View("NuovoPost") ;
         }
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Pizza nuovaPizza)
@@ -45,9 +49,13 @@ namespace PizzeriaCompagnone.Controllers
             {
                 return View("NuovoPost", nuovaPizza);
             }
-            Pizza nuovaPizzaConId = new Pizza(DbPizza.GetPizzas().Count, nuovaPizza.Title, nuovaPizza.Ingredienti, nuovaPizza.Image, nuovaPizza.Image2, nuovaPizza.Prezzo);
+            using (PizzaContext db = new PizzaContext())
+            {
+                Pizza creoLaPizza = new Pizza(nuovaPizza.Title, nuovaPizza.Ingredienti, nuovaPizza.Image, nuovaPizza.Image2, nuovaPizza.Prezzo);
+                db.Pizze.Add(creoLaPizza);
+                db.SaveChanges();
+            }
             //Se il mio modello e´corretto 
-            DbPizza.GetPizzas().Add(nuovaPizzaConId);
             return RedirectToAction("Index");
 
         }
@@ -123,7 +131,7 @@ namespace PizzeriaCompagnone.Controllers
             }
             return pizzaNuova;
         }
+       
     }
 }
-
 
