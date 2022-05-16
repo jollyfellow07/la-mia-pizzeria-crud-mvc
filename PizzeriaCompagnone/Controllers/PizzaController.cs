@@ -27,9 +27,9 @@ namespace PizzeriaCompagnone.Controllers
             {
                 try
                 {
-                    Pizza pizzaTrovata = db.Pizze
+                    Pizza? pizzaTrovata = db.Pizze
                          .Where(pizza => pizza.id == id)
-                         .First();
+                         .FirstOrDefault();
 
                     return View("Dettagli", pizzaTrovata);
 
