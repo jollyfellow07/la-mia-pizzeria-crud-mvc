@@ -18,15 +18,11 @@ namespace PizzeriaCompagnone.Controllers
             return View();
         }
 
-        public IActionResult News()
+        public IActionResult visualUtente()
         {
-            return View();
+
+            return View("visualUtente");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
