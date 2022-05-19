@@ -45,7 +45,7 @@ namespace PizzeriaCompagnone.Controllers
 
                 if (data != null)
                 {
-                    return RedirectToAction("index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
