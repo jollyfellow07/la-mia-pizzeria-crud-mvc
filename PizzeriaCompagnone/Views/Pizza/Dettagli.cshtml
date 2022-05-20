@@ -19,8 +19,15 @@
                     <h5 class="card-title bg-warning text-white p-2">@Model.Title</h5>
                     <p class="card-text text-center p-3">@Model.Ingredienti</p>
                     <hr class="m-0" >
-                    <p class="text-warning p-0 m-0 fs-6" >ATTENZIONE: PIZZA CON GLUTINE </p>
-                    <p class="p-4"> <b>@Model.Prezzo €</b></p>
+                <p class="text-warning p-0 m-0 fs-6" >Categoria: @if(Model.categoria != null)
+                    {
+                      @Model.categoria.titolo
+                        
+                    }else{
+                            <span>Non ha una categoria associata </span>
+                    }
+                </p>
+                <p class="p-4"> <b>@Model.Prezzo €</b></p>
                 </div>
             </div>
     </div>

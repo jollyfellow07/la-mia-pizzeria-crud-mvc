@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PizzeriaCompagnone.Data;
 using PizzeriaCompagnone.Models;
 
@@ -23,7 +24,7 @@ namespace PizzeriaCompagnone.Controllers.API
                 }
                 else
                 {
-                    pizzaLista = db.Pizze.ToList<Pizza>();
+                    pizzaLista = db.Pizze.Include(pizza => pizza.categoria).ToList<Pizza>();
                 }
             }
             return Ok(pizzaLista);

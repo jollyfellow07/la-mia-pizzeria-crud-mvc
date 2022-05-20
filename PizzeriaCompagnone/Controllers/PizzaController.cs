@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PizzeriaCompagnone.Data;
 using PizzeriaCompagnone.Models;
 using PizzeriaCompagnone.Utils;
@@ -29,6 +30,7 @@ namespace PizzeriaCompagnone.Controllers
                 {
                     Pizza? pizzaTrovata = db.Pizze
                          .Where(pizza => pizza.id == id)
+                         .Include(pizza => pizza.categoria)
                          .FirstOrDefault();
 
                     return View("Dettagli", pizzaTrovata);
