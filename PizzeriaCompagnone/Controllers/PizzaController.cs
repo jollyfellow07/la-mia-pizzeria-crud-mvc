@@ -98,11 +98,13 @@ namespace PizzeriaCompagnone.Controllers
         public IActionResult Aggiorna(int id)
         {
             Pizza? pizzaDaModificare = null;
+            List<Categoria> categorie = new List<Categoria>();
             using (PizzaContext db = new PizzaContext())
             {
                       pizzaDaModificare = db.Pizze
                      .Where(pizza => pizza.id == id)
                      .FirstOrDefault();
+                categorie = db.Categorie.ToList<Categoria>();
             }
             if (pizzaDaModificare == null)
             {
@@ -110,17 +112,27 @@ namespace PizzeriaCompagnone.Controllers
             }
             else
             {
-                return View("Aggiorna", pizzaDaModificare);
+                CategoriaPizza model = new CategoriaPizza();
+                model.Pizze = pizzaDaModificare;
+                model.Categorie = categorie;
+                return View("Aggiorna", model);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Aggiorna(int id, Pizza model)
+        public IActionResult Aggiorna(int id, CategoriaPizza model)
         {
             if (!ModelState.IsValid)
             {
-                return View("Aggiorna", model);
+                using (PizzaContext db = new PizzaContext())
+                {
+                    List<Categoria> categorie = db.Categorie.ToList();
+
+                    model.Categorie = categorie;
+                    return View("Aggiorna", model);
+                
+                }
             }
 
             Pizza? pizzaOriginale = null;
@@ -130,16 +142,17 @@ namespace PizzeriaCompagnone.Controllers
                     pizzaOriginale = db.Pizze
                      .Where(pizza => pizza.id == id)
                      .FirstOrDefault();
-                if (pizzaOriginale != null)
-                {
-                    pizzaOriginale.Title = model.Title;
-                    pizzaOriginale.Ingredienti = model.Ingredienti;
-                    pizzaOriginale.Image = model.Image;
-                    pizzaOriginale.Image2 = model.Image2;
-                    pizzaOriginale.Prezzo = model.Prezzo;
+                if (pizzaOriginale != null) 
+                { 
+
+                    pizzaOriginale.Title = model.Pizze.Title;
+                    pizzaOriginale.Ingredienti = model.Pizze.Ingredienti;
+                    pizzaOriginale.Image = model.Pizze.Image;
+                    pizzaOriginale.Image2 = model.Pizze.Image2;
+                    pizzaOriginale.Prezzo = model.Pizze.Prezzo;
+                    pizzaOriginale.CategoriaId = model.Pizze.CategoriaId;
 
                     db.SaveChanges();
-
                     return RedirectToAction("Index");
                 }
                 else
