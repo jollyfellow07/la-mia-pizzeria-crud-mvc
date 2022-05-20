@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzeriaCompagnone.Data;
 
@@ -11,9 +12,10 @@ using PizzeriaCompagnone.Data;
 namespace PizzeriaCompagnone.Migrations
 {
     [DbContext(typeof(PizzaContext))]
-    partial class PizzaContextModelSnapshot : ModelSnapshot
+    [Migration("20220520145107_migrazioneConCategoria")]
+    partial class migrazioneConCategoria
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,11 +32,16 @@ namespace PizzeriaCompagnone.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("CategoriaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("titolo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("Categorie");
                 });
@@ -98,10 +105,17 @@ namespace PizzeriaCompagnone.Migrations
                     b.ToTable("Utenti");
                 });
 
+            modelBuilder.Entity("PizzeriaCompagnone.Models.Categoria", b =>
+                {
+                    b.HasOne("PizzeriaCompagnone.Models.Categoria", null)
+                        .WithMany("Categorie")
+                        .HasForeignKey("CategoriaId");
+                });
+
             modelBuilder.Entity("PizzeriaCompagnone.Models.Pizza", b =>
                 {
                     b.HasOne("PizzeriaCompagnone.Models.Categoria", "categoria")
-                        .WithMany("pizzas")
+                        .WithMany()
                         .HasForeignKey("CategoriaId");
 
                     b.Navigation("categoria");
@@ -109,7 +123,7 @@ namespace PizzeriaCompagnone.Migrations
 
             modelBuilder.Entity("PizzeriaCompagnone.Models.Categoria", b =>
                 {
-                    b.Navigation("pizzas");
+                    b.Navigation("Categorie");
                 });
 #pragma warning restore 612, 618
         }

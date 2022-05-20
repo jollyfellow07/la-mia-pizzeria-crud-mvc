@@ -62,32 +62,32 @@
                     result.data.forEach(pizzaLista => {
                         document.getElementById('post-div').innerHTML += 
                             `
-                             <div class="col-12 col-md-6 col-lg-4 text-center mt-3">
-                            <div class="card shadow mb-5 bg-body rounded justify-content-center" style="width: 24rem;">
-                           <!-- SLIDE -->
-                            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                              <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                  <img src=/img/${pizzaLista.image}  height="350" class="d-block w-100" alt="${pizzaLista.ingredienti}">
+                            <div class="col-12 col-md-6 col-lg-4 text-center mt-3">
+                                <div class="card shadow mb-5 bg-body rounded justify-content-center" style="width: 24rem;">
+                               <!-- SLIDE -->
+                                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                                  <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                      <img src=/img/${pizzaLista.image}  height="350" class="d-block w-100" alt="${pizzaLista.ingredienti}">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img src=/img/${pizzaLista.image2}  height="350"  class="d-block w-100" alt="${pizzaLista.ingredienti}">
+                                    </div>
+                                  </div>
                                 </div>
-                                <div class="carousel-item">
-                                  <img src=/img/${pizzaLista.image2}  height="350"  class="d-block w-100" alt="${pizzaLista.ingredienti}">
-                                </div>
+                                <!--FINE SLIDE -->
+                                    <div class="card-body p-0 bg-opacity-50">
+                                      <h5 class="card-title bg-warning text-white p-2">${pizzaLista.title}</h5>
+                                      <p class="card-text text-center p-3">${pizzaLista.ingredienti}</p>
+                                      <p class="text-warning p-0 m-0 fs-6" >ATTENZIONE: PIZZA CON GLUTINE </p>
+                                          <p class="p-4"> 
+                                              <b>${pizzaLista.prezzo} €</b>
+                                          </p>
+                                      <p>
+                                      </p>
+                                    </div>
                               </div>
                             </div>
-                            <!--FINE SLIDE -->
-                                <div class="card-body p-0 bg-opacity-50">
-                                  <h5 class="card-title bg-warning text-white p-2">${pizzaLista.title}</h5>
-                                  <p class="card-text text-center p-3">${pizzaLista.ingredienti}</p>
-                                  <p class="text-warning p-0 m-0 fs-6" >ATTENZIONE: PIZZA CON GLUTINE </p>
-                                      <p class="p-4"> 
-                                          <b>${pizzaLista.prezzo} €</b>
-                                      </p>
-                                  <p>
-                                  </p>
-                                </div>
-                          </div>
-                        </div>
                             `
                     });
                 }

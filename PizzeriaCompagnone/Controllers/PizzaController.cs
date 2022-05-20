@@ -50,27 +50,47 @@ namespace PizzeriaCompagnone.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View("NuovoPost");
+            using(PizzaContext db = new PizzaContext())
+            {
+                List<Categoria> categorie = db.Categorie.ToList();
+
+                CategoriaPizza model = new CategoriaPizza();
+                model.Pizze = new Pizza();
+                model.Categorie = categorie;
+                return View("NuovoPost", model);
+            }
         }
 
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Pizza nuovaPizza)
+        public IActionResult Create(CategoriaPizza dati)
         {
             if (!ModelState.IsValid)
             {
-                return View("NuovoPost", nuovaPizza);
+                using(PizzaContext db = new PizzaContext())
+                {
+                    List<Categoria> categorie = db.Categorie.ToList();
+
+                    dati.Categorie = categorie;
+                    return View("NuovoPost", dati);
+                }
             }
             using (PizzaContext db = new PizzaContext())
             {
-                Pizza creoLaPizza = new Pizza(nuovaPizza.Title, nuovaPizza.Ingredienti, nuovaPizza.Image, nuovaPizza.Image2, nuovaPizza.Prezzo);
+                Pizza creoLaPizza = new Pizza();
+                creoLaPizza.Title = dati.Pizze.Title;
+                creoLaPizza.Ingredienti = dati.Pizze.Ingredienti;
+                creoLaPizza.Image = dati.Pizze.Image;
+                creoLaPizza.Image2 = dati.Pizze.Image2;
+                creoLaPizza.Prezzo = dati.Pizze.Prezzo;
+                creoLaPizza.CategoriaId = dati.Pizze.CategoriaId;
+
                 db.Pizze.Add(creoLaPizza);
                 db.SaveChanges();
             }
-            //Se il mio modello e´corretto 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index" );
 
         }
 

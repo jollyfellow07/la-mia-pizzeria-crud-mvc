@@ -24,11 +24,15 @@ namespace PizzeriaCompagnone.Models
         [Required(ErrorMessage = "Il campo prezzo è obbligatorio")]
         [Range(1,40, ErrorMessage = "Il valore inserito non è corretto")]
         public double Prezzo { get; set; }
+        
+        public int? CategoriaId { get; set; }
+        public Categoria? categoria { get; set; }
 
         public Pizza()
         {
 
         }
+
         public Pizza(string title, string ingredienti, string image, string image2, double prezzo)
         {
             
