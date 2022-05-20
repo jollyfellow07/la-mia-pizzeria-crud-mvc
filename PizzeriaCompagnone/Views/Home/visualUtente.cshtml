@@ -60,6 +60,11 @@
                     document.getElementById('post-div').classList.remove('d-none');
 
                     result.data.forEach(pizzaLista => {
+                        var categoriaNome = "Nessun categoria associata";
+
+                        if(pizzaLista.categoria != null){
+                            categoriaNome = pizzaLista.categoria.titolo;
+                            }
                         document.getElementById('post-div').innerHTML += 
                             `
                             <div class="col-12 col-md-6 col-lg-4 text-center mt-3">
@@ -79,7 +84,7 @@
                                     <div class="card-body p-0 bg-opacity-50">
                                       <h5 class="card-title bg-warning text-white p-2">${pizzaLista.title}</h5>
                                       <p class="card-text text-center p-3">${pizzaLista.ingredienti}</p>
-                                      <p class="text-warning p-0 m-0 fs-6" >${pizzaLista.categoria.titolo} </p>
+                                      <p class="text-warning p-0 m-0 fs-6" >${categoriaNome} </p>
                                           <p class="p-4"> 
                                               <b>${pizzaLista.prezzo} €</b>
                                           </p>
